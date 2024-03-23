@@ -21,9 +21,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Install yarn
+        run: npm install -g yarn
       - name: Install package
         run: yarn install
       - name: Build code
         run: yarn build
       - name: Restart pm2
-        run: pm2 restart api
+        run: npm exec pm2 restart api
+      - name: Clean up
+        if: always()
+        run: npm uninstall -g yarn
